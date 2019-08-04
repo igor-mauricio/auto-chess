@@ -148,8 +148,10 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButtonOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOnActionPerformed
         // TODO add your handling code here:
-        if(!running)
-            obs.start();
+        if(!running){
+                obs.start();
+            
+        }
         running = true;
     }//GEN-LAST:event_jButtonOnActionPerformed
 

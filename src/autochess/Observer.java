@@ -17,14 +17,20 @@ import java.util.logging.Logger;
  */
 public class Observer extends Thread {
     
+    public boolean started = false;
+    public boolean paused = false;
     public int[][] move = new int[4][2];
     public int[][] cache = new int[8][8];
     //Whites
-    public final Color white1 = new Color(248,248,248);
-    public final Color white2 = new Color(249,249,249);
-    public final Color white3 = new Color(243,243,243);
+    public final Color whiteT = new Color(255,255,255);
+//    public final Color white1 = new Color(248,248,248);
+    //public final Color white2 = new Color(249,249,249);
+   // public final Color white3 = new Color(243,243,243);
     //Blacks
-    public final Color black1 = new Color(86,83,82);
+    public final Color blackT = new Color(4,8,8);
+    public final Color blackT1 = new Color(3,7,7);
+    
+    //public final Color black1 = new Color(86,83,82);
     
     Robot robot;
     public Observer() throws AWTException{
@@ -65,9 +71,11 @@ public class Observer extends Thread {
     }
     
     public int checkColor(Color c){
-        if(c.equals(white1)||c.equals(white2)||c.equals(white3))
+       // if(c.equals(white1)||c.equals(white2)||c.equals(white3))
+       if(c.equals(whiteT))
             return 1;
-        else if(c.equals(black1))
+        //else if(c.equals(black1))
+        else if(c.equals(blackT)||c.equals(blackT1))
             return 2;
         else
             return 0;
@@ -78,13 +86,13 @@ public class Observer extends Thread {
         for(int i=0;i<4;i++)
             for(int j=0;j<2;j++)
                 move[i][j]=-1;
-        
-        for(int i=0;i<8;i++){
-            for(int j=0;j<8;j++){
+        System.out.println("\n\n\n");
+        for(int j=0;j<8;j++){
+            for(int i=0;i<8;i++){
                 int x, y;
                 if(!Board.competitive){
-                    x = 169 + i*111 + 56;
-                    y = 101 + j*111 + 95;
+                    x = 169 + i*111 + 55;
+                    y = 101 + j*111 + 93;
                 }else{
                     x = 117 + i*101 + 51;
                     y = 136 + j*101 + 84;
@@ -130,8 +138,9 @@ public class Observer extends Thread {
                         }
                         
                     }
-                    
+                    System.out.print("_"+ pixel);
             }
+            System.out.print("_\n");
         }
         
         if(move[0][0]!=-1){
@@ -151,6 +160,7 @@ public class Observer extends Thread {
             }
             
         }
+        
         
     }
     public String charMove(int x1,int y1, int x2, int y2){
@@ -227,10 +237,13 @@ public class Observer extends Thread {
         try {
             
             while(true){
+                if(!paused){
+                    
+                
                 checkBoard();
 
                 Thread.sleep(1000);
-
+                }
             }
         
         
@@ -250,7 +263,7 @@ public class Observer extends Thread {
     111x111 square size 
     
     225x196 first pixel piece
-    
+    226 194   f p p Texture
     777,358 new game button
     
     COMP
@@ -267,3 +280,5 @@ public class Observer extends Thread {
     508,520 new game button
     
     */
+
+//
