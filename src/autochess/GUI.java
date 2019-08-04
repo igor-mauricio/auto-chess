@@ -24,7 +24,6 @@ public class GUI extends javax.swing.JFrame {
         try {
             obs= new Observer();
             Board.resetBoard();
-            obs.initializeCache();
         } catch (AWTException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }

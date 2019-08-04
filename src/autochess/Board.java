@@ -32,7 +32,13 @@ public class Board {
     }
     public static void setSide(Boolean white){
         Board.white=white;
-        aiTurn= white;
+        Board.aiTurn= white;
+        if(!white){
+            Board.board[0][3]= 'k';
+            Board.board[0][4]= 'q';
+            Board.board[7][3]= 'K';
+            Board.board[7][4]= 'Q';
+        }
     }
     public static void setCompetitive(Boolean competitive){
         Board.competitive = competitive;

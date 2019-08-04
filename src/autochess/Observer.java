@@ -20,7 +20,6 @@ public class Observer extends Thread {
     public boolean started = false;
     public boolean paused = false;
     public int[][] move = new int[4][2];
-    public int[][] cache = new int[8][8];
     //Whites
     public final Color whiteT = new Color(255,255,255);
 //    public final Color white1 = new Color(248,248,248);
@@ -37,24 +36,6 @@ public class Observer extends Thread {
         this.robot= new Robot();
         
     }
-    public void initializeCache(){
-        for(int i=0;i<8;i++)
-            for(int j=0;j<8;j++){
-                if(Board.board[i][j]=='R'||Board.board[i][j]=='N'||Board.board[i][j]=='B'||Board.board[i][j]=='Q'||Board.board[i][j]=='K')
-                    if(Board.white)
-                        cache[i][j]=1;
-                    else
-                        cache[i][j]=2;
-                else if(Board.board[i][j]=='r'||Board.board[i][j]=='n'||Board.board[i][j]=='b'||Board.board[i][j]=='q'||Board.board[i][j]=='k')
-                    if(Board.white)
-                        cache[i][j]=2;
-                    else
-                        cache[i][j]=1;
-                else
-                    cache[i][j]=0;
-            }
-    }
-    
     public void checkSide(){
         Color piece;
         
@@ -86,7 +67,9 @@ public class Observer extends Thread {
         for(int i=0;i<4;i++)
             for(int j=0;j<2;j++)
                 move[i][j]=-1;
+        
         System.out.println("\n\n\n");
+        
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
                 int x, y;
@@ -99,35 +82,49 @@ public class Observer extends Thread {
                 }
                 
                     int pixel = checkColor(robot.getPixelColor(x, y));
-                    int cCache = cache[i][j];
                     int board;
-                    if(Board.board[i][j]=='R'||Board.board[i][j]=='N'||Board.board[i][j]=='B'||Board.board[i][j]=='Q'||Board.board[i][j]=='K')
-                        if(Board.white)
-                            board=1;
-                        else
-                            board=2;
-                    else if(Board.board[i][j]=='r'||Board.board[i][j]=='n'||Board.board[i][j]=='b'||Board.board[i][j]=='q'||Board.board[i][j]=='k')
-                        if(Board.white)
-                            board=2;
-                        else
-                            board=1;
-                    else
-                        board=0;
-                    
-                    if(pixel!=cCache){
-                        
-                        cache[i][j]=pixel;
-                    } else if(pixel==cCache&&cCache!=board){
-                        if(pixel==0)
-                            Board.board[i][j]='-';
+                    switch (Board.board[i][j]) {
+                        case 'R':
+                        case 'N':
+                        case 'B':
+                        case 'Q':
+                        case 'K':
+                        case 'P':
+                            if(Board.white)
+                                board=1;
+                            else
+                                board=2;
+                            
+                            break;
+                        case 'r':
+                        case 'n':
+                        case 'b':
+                        case 'q':
+                        case 'k':
+                        case 'p':
+                            if(Board.white)
+                                board=2;
+                            else
+                                board = 1;
+                            
+                            break;
+                        default:
+                            board=0;
+                            break;
+                }
+                    if(pixel!=board){
+                        System.out.print("|"+pixel+"-"+board+"|");
+                        if(pixel==0){
+                            //Board.board[i][j]='-';
                             if(move[0][0]==-1){
-                                move[0][0]=i;
-                                move[0][1]=j;
+                                    move[0][0]=i;
+                                    move[0][1]=j;
                             }else if(move[2][0]==-1){
-                                move[2][0]=i;
-                                move[2][1]=j;
+                                    move[2][0]=i;
+                                  move[2][1]=j;
                             }
-                        if(pixel==1||pixel==2){
+                        }
+                        else if(pixel==1||pixel==2){
                             if(move[1][0]==-1){
                                 move[1][0]=i;
                                 move[1][1]=j;
@@ -154,9 +151,11 @@ public class Observer extends Thread {
                 
                 
             }else{
+                System.out.println("\n move1: \n"+move[0][0]+"x"+move[0][1]+" - "+move[1][0]+"x"+move[1][1]);
+                System.out.println("\n move2: \n"+move[2][0]+"x"+move[2][1]+" - "+move[3][0]+"x"+move[3][1]);
                 Board.board[move[1][0]][move[1][1]]= Board.board[move[0][0]][move[0][1]];
                 Board.board[move[0][0]][move[0][1]]= '-';
-                Board.history.concat(charMove(move[0][0],move[0][1],move[1][0],move[1][1]));
+                Board.history+=" "+charMove(move[0][0],move[0][1],move[1][0],move[1][1]);
             }
             
         }
