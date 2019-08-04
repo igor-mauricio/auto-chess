@@ -87,15 +87,15 @@ public class Observer extends Thread {
             for(int j=0;j<2;j++)
                 move[i][j]=-1;
         System.out.println("\n\n\n");
-        for(int j=0;j<8;j++){
-            for(int i=0;i<8;i++){
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
                 int x, y;
                 if(!Board.competitive){
-                    x = 169 + i*111 + 55;
-                    y = 101 + j*111 + 93;
+                    x = 169 + j*111 + 55;
+                    y = 101 + i*111 + 93;
                 }else{
-                    x = 117 + i*101 + 51;
-                    y = 136 + j*101 + 84;
+                    x = 117 + j*101 + 51;
+                    y = 136 + i*101 + 84;
                 }
                 
                     int pixel = checkColor(robot.getPixelColor(x, y));
