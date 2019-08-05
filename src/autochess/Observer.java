@@ -153,36 +153,36 @@ public class Observer extends Thread {
                 if(Board.white){
                     if(move[0][0]==0 || move[2][0]==0){
                         
-                        Board.board[7][0]= '-';
-                        Board.board[7][1]= '-';
-                        Board.board[7][2]= 'k';
-                        Board.board[7][3]= 'r';
-                        Board.board[7][4]= '-';
-                        Board.history+=" "+charMove(4,7,2,7);
+                        Board.board[0][0]= '-';
+                        Board.board[0][1]= '-';
+                        Board.board[0][2]= 'k';
+                        Board.board[0][3]= 'r';
+                        Board.board[0][4]= '-';
+                        Board.history+=" "+charMove(0,4,0,4);
                     }else{
-                        Board.board[7][4]= '-';
-                        Board.board[7][5]= 'r';
-                        Board.board[7][6]= 'k';
-                        Board.board[7][7]= '-';
-                        Board.history+=" "+charMove(4,7,6,7);
+                        Board.board[0][4]= '-';
+                        Board.board[0][5]= 'r';
+                        Board.board[0][6]= 'k';
+                        Board.board[0][7]= '-';
+                        Board.history+=" "+charMove(0,4,0,6);
                     }
                 }else{
                     if(move[0][0]==0 || move[2][0]==0){
                         
-                        Board.board[7][0]= '-';
-                        Board.board[7][1]= 'k';
-                        Board.board[7][2]= 'r';
-                        Board.board[7][3]= '-';
+                        Board.board[0][0]= '-';
+                        Board.board[0][1]= 'k';
+                        Board.board[0][2]= 'r';
+                        Board.board[0][3]= '-';
                         
-                        Board.history+=" "+charMove(3,7,1,7);
+                        Board.history+=" "+charMove(0,3,0,1);
                     }else{
-                        Board.board[7][3]= '-';
-                        Board.board[7][4]= 'r';
-                        Board.board[7][5]= 'k';
-                        Board.board[7][6]= '-';
-                        Board.board[7][7]= '-';
+                        Board.board[0][3]= '-';
+                        Board.board[0][4]= 'r';
+                        Board.board[0][5]= 'k';
+                        Board.board[0][6]= '-';
+                        Board.board[0][7]= '-';
                         
-                        Board.history+=" "+charMove(3,7,5,7);
+                        Board.history+=" "+charMove(0,3,0,5);
                     }
                 }
                 
@@ -260,41 +260,41 @@ public class Observer extends Thread {
             if(Board.board[y1][x1]=='K'){
                 
                 
-                
-                 if(Board.white){
-                    if(y2 == 5){
+                if(Board.white){
+                    if((y2 == 5)){
                         
-                        Board.board[0][0]= '-';
-                        Board.board[0][1]= '-';
-                        Board.board[0][2]= 'k';
-                        Board.board[0][3]= 'r';
-                        Board.board[0][4]= '-';
-                    }else if(y2==1){
-                        Board.board[0][4]= '-';
-                        Board.board[0][5]= 'r';
-                        Board.board[0][6]= 'k';
-                        Board.board[0][7]= '-';
+                        Board.board[7][0]= '-';
+                        Board.board[7][1]= '-';
+                        Board.board[7][2]= 'k';
+                        Board.board[7][3]= 'r';
+                        Board.board[7][4]= '-';
+                        Board.history+=" "+charMove(7,4,7,4);
+                    }else if (y2==1){
+                        Board.board[7][4]= '-';
+                        Board.board[7][5]= 'r';
+                        Board.board[7][6]= 'k';
+                        Board.board[7][7]= '-';
+                        Board.history+=" "+charMove(7,4,7,6);
                     }
                 }else{
                     if(y2 == 7){
                         
-                        Board.board[0][0]= '-';
-                        Board.board[0][1]= 'k';
-                        Board.board[0][2]= 'r';
-                        Board.board[0][3]= '-';
+                        Board.board[7][0]= '-';
+                        Board.board[7][1]= 'k';
+                        Board.board[7][2]= 'r';
+                        Board.board[7][3]= '-';
                         
+                        Board.history+=" "+charMove(7,3,7,1);
                     }else if(y2==2){
-                        Board.board[0][3]= '-';
-                        Board.board[0][4]= 'r';
-                        Board.board[0][5]= 'k';
-                        Board.board[0][6]= '-';
-                        Board.board[0][7]= '-';
+                        Board.board[7][3]= '-';
+                        Board.board[7][4]= 'r';
+                        Board.board[7][5]= 'k';
+                        Board.board[7][6]= '-';
+                        Board.board[7][7]= '-';
                         
+                        Board.history+=" "+charMove(7,3,7,5);
                     }
                 }
-                
-                
-                
                 
                 
             }
