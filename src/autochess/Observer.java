@@ -193,6 +193,9 @@ public class Observer extends Thread {
                 System.out.println("\n move2: \n"+move[2][0]+"x"+move[2][1]+" - "+move[3][0]+"x"+move[3][1]);
                 Board.board[move[1][0]][move[1][1]]= Board.board[move[0][0]][move[0][1]];
                 Board.board[move[0][0]][move[0][1]]= '-';
+                if(Board.white)
+                    Board.history+=" "+charMove(7-move[0][0],move[0][1],7-move[1][0],move[1][1]);
+                else
                 Board.history+=" "+charMove(move[0][0],move[0][1],move[1][0],move[1][1]);
                 
             }
