@@ -202,10 +202,10 @@ public class Observer extends Thread {
             Board.enemyMove=true;
             System.out.println(Board.history);
             
-        } else if(Board.getBestMove().equals("")&&Board.white&&!Board.waiter){
+        } else if(Board.history.equals("")&&Board.white&&!Board.waiter){
             Board.enemyMove=true;
-            Board.waiter=true;
         }
+        
             
         
         

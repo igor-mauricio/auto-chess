@@ -40,8 +40,8 @@ public class AutoChess extends Thread {
         out.flush();
         
             while((input = in.readLine()) !=null){
-                System.out.println(input);
-                System.out.println("-----");
+                //System.out.println(input);
+                //System.out.println("-----");
                 if(input.equals("uciok")){
 
                     String options = 
@@ -77,14 +77,18 @@ public class AutoChess extends Thread {
                      
                      System.out.println("Esperando movimentos inimigos");
                     while(true){
-                        if(Board.enemyMove){
+                        if(Board.enemyMove&&!Board.waiter){
+                            
+                                
                             String message = "position startpos moves"+Board.history+"\n"
                             + "go movetime " +((rand.nextInt(1)+6)*1000)+"\n";
                             System.out.println("Movimento Inimigo! Procurando bestmove");
                             Board.enemyMove=false;
                             System.out.println(message);
                             out.write(message);
+                            Board.waiter=true;
                             break;
+                            
                         }
                         Thread.sleep(1000);
                     }
@@ -92,6 +96,7 @@ public class AutoChess extends Thread {
                     System.out.println("endloop");
                 }
                 if(input.contains("bestmove")){
+                    System.out.println(input);
                         if(input.charAt(13)!=' ')
                             Board.setBestMove(""+input.charAt(9)+input.charAt(10)+input.charAt(11)+input.charAt(12)+input.charAt(13));
                         else{
