@@ -8,6 +8,7 @@ package autochess;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import static java.awt.event.InputEvent.BUTTON1_MASK;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
@@ -184,20 +185,28 @@ public class Observer extends Thread {
         switch(u){
             case 'a':
                 number = 0;
+                break;
             case 'b':
                 number = 1;
+                break;
             case 'c':
                 number = 2;
+                break;
             case 'd':
                 number = 3;
+                break;
             case 'e':
                 number = 4;
+                break;
             case 'f':
                 number = 5;
+                break;
             case 'g':
                number = 6;
+               break;
             case 'h':
                number = 7;
+               break;
                
         }
         if(!Board.white){
@@ -208,23 +217,22 @@ public class Observer extends Thread {
     //bestmove e7e5 ponder g1e2
     public void checkBestMove(){
         if(!Board.getBestMove().equals("")){
-            
             int x1=charToNumber(Board.getBestMove().charAt(0));
-            int y1=Integer.parseInt(""+Board.getBestMove().charAt(1));
+            int y1=Integer.parseInt(""+Board.getBestMove().charAt(1))-1;
             int x2=charToNumber(Board.getBestMove().charAt(2));
-            int y2= Integer.parseInt(""+Board.getBestMove().charAt(3));
+            int y2= Integer.parseInt(""+Board.getBestMove().charAt(3))-1;
             
             performMove(x1,y1,x2,y2);
             Board.setBestMove("");
             
-            Board.board[x2][y2]= Board.board[x1][y1];
-            Board.board[x1][y1]= '-';
-            Board.history+=" "+charMove(x1,y1,x2,y2);
+            Board.board[y2][x2]= Board.board[y1][x1];
+            Board.board[y1][x1]= '-';
+            Board.history+=" "+charMove(y1,x1,y2,x2);
             
         }
     }
-    public void performMove(int y1,int x1, int y2, int x2){
-        
+    public void performMove(int x1,int y1, int x2, int y2){
+        System.out.println("BEST MOVE IN NUMBERS ->"+x1+y1+x2+y2);
         if(!Board.getCompetitive()){
             x1 = 169 + x1*111 + 55;
             y1 = 101 + y1*111 + 55;
@@ -237,18 +245,34 @@ public class Observer extends Thread {
             x2 = 117 + x2*101 + 50;
             y2 = 136 + y2*101 + 50;
         }
+        System.out.println("COORDINATES:"+x1+"x"+y1+" - "+x2+"x"+y2);
         
         robot.mouseMove(x1, y1);
-        robot.delay(100);
-        robot.mousePress(BUTTON1_MASK);
-        robot.delay(100);
-        robot.mouseRelease(BUTTON1_MASK);
+        robot.mouseMove(x1, y1);
+        robot.mouseMove(x1, y1);
+        robot.mouseMove(x1, y1);
+        
+        robot.delay(500);
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.delay(500);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         
         robot.mouseMove(x2, y2);
-        robot.delay(100);
-        robot.mousePress(BUTTON1_MASK);
-        robot.delay(100);
-        robot.mouseRelease(BUTTON1_MASK);
+        robot.mouseMove(x2, y2);
+        robot.mouseMove(x2, y2);
+        robot.mouseMove(x2, y2);
+        robot.delay(500);
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.delay(500);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         
         
         

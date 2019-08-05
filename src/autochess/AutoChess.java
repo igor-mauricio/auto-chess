@@ -83,8 +83,7 @@ public class AutoChess extends Thread {
                             System.out.println("Movimento Inimigo! Procurando bestmove");
                             Board.enemyMove=false;
                             System.out.println(message);
-                            out.write("position startpos moves"+Board.history+"\n");
-                            out.write("go movetime 100\n");
+                            out.write(message);
                             break;
                         }
                         Thread.sleep(1000);
@@ -94,6 +93,21 @@ public class AutoChess extends Thread {
                 }
                 if(input.contains("bestmove")){
                         Board.setBestMove(""+input.charAt(9)+input.charAt(10)+input.charAt(11)+input.charAt(12));
+                        
+                        
+                        while(true){
+                            if(Board.enemyMove){
+                                String message = "position startpos moves"+Board.history+"\n"
+                                + "go movetime " +((rand.nextInt(7)+6)*1000)+"\n";
+                                System.out.println("Movimento Inimigo! Procurando bestmove");
+                                Board.enemyMove=false;
+                                System.out.println(message);
+                                out.write(message);
+                                break;
+                            }
+                            Thread.sleep(1000);
+                        }
+                    out.flush();
                         
                     }
                 
