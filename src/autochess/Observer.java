@@ -150,8 +150,15 @@ public class Observer extends Thread {
             
             
             if(move[2][0]!=-1){
+                System.out.println("ROQUE INIMIGO!"+move[0][0]+move[0][1]+" - "+move[1][0]+move[1][1]+"|"+move[2][0]+move[2][1]+" - "+move[3][0]+move[3][1]);
                 if(Board.white){
-                    if(move[0][0]==0 || move[2][0]==0){
+                    if(move[0][1]==6 || move[2][1]==6|| move[2][1]==6 || move[3][1]==6){
+                        Board.board[0][4]= '-';
+                        Board.board[0][5]= 'r';
+                        Board.board[0][6]= 'k';
+                        Board.board[0][7]= '-';
+                        Board.history+=" "+charMove(0,4,0,6);
+                    }else{
                         
                         Board.board[0][0]= '-';
                         Board.board[0][1]= '-';
@@ -159,15 +166,9 @@ public class Observer extends Thread {
                         Board.board[0][3]= 'r';
                         Board.board[0][4]= '-';
                         Board.history+=" "+charMove(0,4,0,4);
-                    }else{
-                        Board.board[0][4]= '-';
-                        Board.board[0][5]= 'r';
-                        Board.board[0][6]= 'k';
-                        Board.board[0][7]= '-';
-                        Board.history+=" "+charMove(0,4,0,6);
                     }
                 }else{
-                    if(move[0][0]==0 || move[2][0]==0){
+                    if(move[0][1]==0 || move[2][1]==0){
                         
                         Board.board[0][0]= '-';
                         Board.board[0][1]= 'k';
@@ -258,27 +259,30 @@ public class Observer extends Thread {
             }
             performMove(x1,y1,x2,y2,(Board.getBestMove().length()>4));
             Board.setBestMove("");
-            if(Board.board[y1][x1]=='K'){
-                
+            boolean noteee=false;
+            if(Board.board[y1][x1]=='K'){//4767
+                System.out.println("ROOOOOUE! (ou movimento comum com o rei)"+x1+y1+x2+y2);
                 
                 if(Board.white){
-                    if((y2 == 5)){
+                    if((x2 == 2)){
                         
                         Board.board[7][0]= '-';
                         Board.board[7][1]= '-';
                         Board.board[7][2]= 'k';
                         Board.board[7][3]= 'r';
                         Board.board[7][4]= '-';
-                        Board.history+=" "+charMove(7,4,7,4);
-                    }else if (y2==1){
+                        Board.history+=" "+charMove(7,4,7,2);
+                        noteee=true;
+                    }else if (x2==6){
                         Board.board[7][4]= '-';
                         Board.board[7][5]= 'r';
                         Board.board[7][6]= 'k';
                         Board.board[7][7]= '-';
                         Board.history+=" "+charMove(7,4,7,6);
-                    }
+                        noteee=true;
+                    } 
                 }else{
-                    if(y2 == 7){
+                    if(x2 == 7){
                         
                         Board.board[7][0]= '-';
                         Board.board[7][1]= 'k';
@@ -286,7 +290,8 @@ public class Observer extends Thread {
                         Board.board[7][3]= '-';
                         
                         Board.history+=" "+charMove(7,3,7,1);
-                    }else if(y2==2){
+                        noteee=true;
+                    }else if(x2==2){
                         Board.board[7][3]= '-';
                         Board.board[7][4]= 'r';
                         Board.board[7][5]= 'k';
@@ -294,19 +299,21 @@ public class Observer extends Thread {
                         Board.board[7][7]= '-';
                         
                         Board.history+=" "+charMove(7,3,7,5);
+                        noteee=true;
                     }
                 }
                 
                 
-            }
+            }if(!noteee){
             Board.board[y2][x2]= Board.board[y1][x1];
-            Board.board[y1][x1]= '-';
+            Board.board[y1][x1]= '-';}
             if(Board.white){
                 y1=7-y1;
                 y2=7-y2;
             }
-            Board.history+=" "+charMove(y1,x1,y2,x2);
-            if(Board.getBestMove().length()>4)
+            if(!noteee)
+                Board.history+=" "+charMove(y1,x1,y2,x2);
+            if(Board.getBestMove().length()>4&&(Board.board[y2][x2]=='P'||Board.board[y2][x2]=='p'))
                  Board.history+="q";
             
             Board.waiter=false;
