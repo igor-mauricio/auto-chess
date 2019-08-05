@@ -8,6 +8,7 @@ package autochess;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Robot;
+import static java.awt.event.InputEvent.BUTTON1_MASK;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,6 @@ import java.util.logging.Logger;
 public class Observer extends Thread {
     
     public boolean started = false;
-    public boolean paused = false;
     public int[][] move = new int[4][2];
     //Whites
     public final Color whiteT = new Color(255,255,255);
@@ -125,6 +125,10 @@ public class Observer extends Thread {
                             }
                         }
                         else if(pixel==1||pixel==2){
+//                            if((Board.white&&pixel==2)||(!Board.white&&pixel==1)){
+//                                Board.enemyMove=true;
+//                                
+//                            }
                             if(move[1][0]==-1){
                                 move[1][0]=i;
                                 move[1][1]=j;
@@ -142,6 +146,8 @@ public class Observer extends Thread {
         
         if(move[0][0]!=-1){
             
+            
+            
             if(move[2][0]!=-1){
                 
                 
@@ -156,14 +162,105 @@ public class Observer extends Thread {
                 Board.board[move[1][0]][move[1][1]]= Board.board[move[0][0]][move[0][1]];
                 Board.board[move[0][0]][move[0][1]]= '-';
                 Board.history+=" "+charMove(move[0][0],move[0][1],move[1][0],move[1][1]);
+                switch(Board.board[move[1][0]][move[1][1]]){
+                    case 'r':
+                    case 'n':
+                    case 'b':
+                    case 'q':
+                    case 'k':
+                    case 'p':
+                        Board.enemyMove=true;
+                }
             }
+            System.out.println(Board.history);
             
         }
         
         
     }
+    
+    public int charToNumber(char u){
+        int number = 0;
+        switch(u){
+            case 'a':
+                number = 0;
+            case 'b':
+                number = 1;
+            case 'c':
+                number = 2;
+            case 'd':
+                number = 3;
+            case 'e':
+                number = 4;
+            case 'f':
+                number = 5;
+            case 'g':
+               number = 6;
+            case 'h':
+               number = 7;
+               
+        }
+        if(!Board.white){
+            number=7-number;
+        }
+        return number;
+    }
+    //bestmove e7e5 ponder g1e2
+    public void checkBestMove(){
+        if(!Board.getBestMove().equals("")){
+            
+            int x1=charToNumber(Board.getBestMove().charAt(0));
+            int y1=Integer.parseInt(""+Board.getBestMove().charAt(1));
+            int x2=charToNumber(Board.getBestMove().charAt(2));
+            int y2= Integer.parseInt(""+Board.getBestMove().charAt(3));
+            
+            performMove(x1,y1,x2,y2);
+            Board.setBestMove("");
+            
+            Board.board[x2][y2]= Board.board[x1][y1];
+            Board.board[x1][y1]= '-';
+            Board.history+=" "+charMove(x1,y1,x2,y2);
+            
+        }
+    }
+    public void performMove(int y1,int x1, int y2, int x2){
+        
+        if(!Board.getCompetitive()){
+            x1 = 169 + x1*111 + 55;
+            y1 = 101 + y1*111 + 55;
+            x2 = 169 + x2*111 + 55;
+            y2 = 101 + y2*111 + 55;
+            
+        } else{
+            x1 = 117 + x1*101 + 50;
+            y1 = 136 + y1*101 + 50;
+            x2 = 117 + x2*101 + 50;
+            y2 = 136 + y2*101 + 50;
+        }
+        
+        robot.mouseMove(x1, y1);
+        robot.delay(100);
+        robot.mousePress(BUTTON1_MASK);
+        robot.delay(100);
+        robot.mouseRelease(BUTTON1_MASK);
+        
+        robot.mouseMove(x2, y2);
+        robot.delay(100);
+        robot.mousePress(BUTTON1_MASK);
+        robot.delay(100);
+        robot.mouseRelease(BUTTON1_MASK);
+        
+        
+        
+    }
     public String charMove(int x1,int y1, int x2, int y2){
         String ret="";
+        if(!Board.white){
+            x1=7-x1;
+            y1=7-y1;
+            x2=7-x2;
+            y2=7-y2;
+        }
         switch(y1){
             case 0:
                 ret+="a";
@@ -189,10 +286,20 @@ public class Observer extends Thread {
             case 7:
                 ret+="h";
                 break;
+        }if(!Board.white){
+            x1=7-x1;
+            y1=7-y1;
+            x2=7-x2;
+            y2=7-y2;
         }
         
         ret+=""+Integer.toString(x1+1);
-        
+        if(!Board.white){
+            x1=7-x1;
+            y1=7-y1;
+            x2=7-x2;
+            y2=7-y2;
+        }
         switch(y2){
             case 0:
                 ret+="a";
@@ -219,8 +326,16 @@ public class Observer extends Thread {
                 ret+="h";
                 break;
         }
+        if(!Board.white){
+            x1=7-x1;
+            y1=7-y1;
+            x2=7-x2;
+            y2=7-y2;
+        }
         ret+=""+Integer.toString(x2+1);
-        if((Board.board[x2][y2]=='p'||Board.board[x1][y1]=='P')&&(y2==0||y2==7)){
+        
+        
+        if((Board.board[x2][y2]=='p'||Board.board[x1][y1]=='P')&&(x1==0||x2==7)){
             ret+="q";
             if(Board.board[x2][y2]=='p')
                 Board.board[x2][y2]='q';
@@ -236,13 +351,12 @@ public class Observer extends Thread {
         try {
             
             while(true){
-                if(!paused){
                     
                 
                 checkBoard();
-
+                checkBestMove();
                 Thread.sleep(1000);
-                }
+                
             }
         
         
