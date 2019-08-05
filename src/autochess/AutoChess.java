@@ -92,8 +92,11 @@ public class AutoChess extends Thread {
                     System.out.println("endloop");
                 }
                 if(input.contains("bestmove")){
-                        Board.setBestMove(""+input.charAt(9)+input.charAt(10)+input.charAt(11)+input.charAt(12));
-                        
+                        if(input.charAt(13)!=' ')
+                            Board.setBestMove(""+input.charAt(9)+input.charAt(10)+input.charAt(11)+input.charAt(12)+input.charAt(13));
+                        else{
+                            Board.setBestMove(""+input.charAt(9)+input.charAt(10)+input.charAt(11)+input.charAt(12));
+                        }
                         
                         while(true){
                             if(Board.enemyMove){

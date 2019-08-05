@@ -150,10 +150,41 @@ public class Observer extends Thread {
             
             
             if(move[2][0]!=-1){
-                
-                
-                //ROQUE --------------------------------------------------
-                
+                if(Board.white){
+                    if(move[0][0]==0 || move[2][0]==0){
+                        
+                        Board.board[7][0]= '-';
+                        Board.board[7][1]= '-';
+                        Board.board[7][2]= 'k';
+                        Board.board[7][3]= 'r';
+                        Board.board[7][4]= '-';
+                        Board.history+=" "+charMove(4,7,2,7);
+                    }else{
+                        Board.board[7][4]= '-';
+                        Board.board[7][5]= 'r';
+                        Board.board[7][6]= 'k';
+                        Board.board[7][7]= '-';
+                        Board.history+=" "+charMove(4,7,6,7);
+                    }
+                }else{
+                    if(move[0][0]==0 || move[2][0]==0){
+                        
+                        Board.board[7][0]= '-';
+                        Board.board[7][1]= 'k';
+                        Board.board[7][2]= 'r';
+                        Board.board[7][3]= '-';
+                        
+                        Board.history+=" "+charMove(3,7,1,7);
+                    }else{
+                        Board.board[7][3]= '-';
+                        Board.board[7][4]= 'r';
+                        Board.board[7][5]= 'k';
+                        Board.board[7][6]= '-';
+                        Board.board[7][7]= '-';
+                        
+                        Board.history+=" "+charMove(3,7,5,7);
+                    }
+                }
                 
                 
                 
@@ -163,16 +194,9 @@ public class Observer extends Thread {
                 Board.board[move[1][0]][move[1][1]]= Board.board[move[0][0]][move[0][1]];
                 Board.board[move[0][0]][move[0][1]]= '-';
                 Board.history+=" "+charMove(move[0][0],move[0][1],move[1][0],move[1][1]);
-                switch(Board.board[move[1][0]][move[1][1]]){
-                    case 'r':
-                    case 'n':
-                    case 'b':
-                    case 'q':
-                    case 'k':
-                    case 'p':
-                        Board.enemyMove=true;
-                }
+                
             }
+            Board.enemyMove=true;
             System.out.println(Board.history);
             
         }
@@ -222,16 +246,58 @@ public class Observer extends Thread {
             int x2=charToNumber(Board.getBestMove().charAt(2));
             int y2= Integer.parseInt(""+Board.getBestMove().charAt(3))-1;
             
-            performMove(x1,y1,x2,y2);
+            performMove(x1,y1,x2,y2,(Board.getBestMove().length()>4));
             Board.setBestMove("");
-            
+            if(Board.board[y1][x1]=='K'){
+                
+                
+                
+                 if(Board.white){
+                    if(y2 == 5){
+                        
+                        Board.board[0][0]= '-';
+                        Board.board[0][1]= '-';
+                        Board.board[0][2]= 'k';
+                        Board.board[0][3]= 'r';
+                        Board.board[0][4]= '-';
+                    }else if(y2==1){
+                        Board.board[0][4]= '-';
+                        Board.board[0][5]= 'r';
+                        Board.board[0][6]= 'k';
+                        Board.board[0][7]= '-';
+                    }
+                }else{
+                    if(y2 == 7){
+                        
+                        Board.board[0][0]= '-';
+                        Board.board[0][1]= 'k';
+                        Board.board[0][2]= 'r';
+                        Board.board[0][3]= '-';
+                        
+                    }else if(y2==2){
+                        Board.board[0][3]= '-';
+                        Board.board[0][4]= 'r';
+                        Board.board[0][5]= 'k';
+                        Board.board[0][6]= '-';
+                        Board.board[0][7]= '-';
+                        
+                    }
+                }
+                
+                
+                
+                
+                
+            }
             Board.board[y2][x2]= Board.board[y1][x1];
             Board.board[y1][x1]= '-';
             Board.history+=" "+charMove(y1,x1,y2,x2);
+            if(Board.getBestMove().length()>4)
+                 Board.history+="q";
             
         }
     }
-    public void performMove(int x1,int y1, int x2, int y2){
+    public void performMove(int x1,int y1, int x2, int y2, boolean promotion){
         System.out.println("BEST MOVE IN NUMBERS ->"+x1+y1+x2+y2);
         if(!Board.getCompetitive()){
             x1 = 169 + x1*111 + 55;
@@ -252,11 +318,11 @@ public class Observer extends Thread {
         robot.mouseMove(x1, y1);
         robot.mouseMove(x1, y1);
         
-        robot.delay(500);
+        robot.delay(300);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(500);
+        robot.delay(300);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -265,14 +331,24 @@ public class Observer extends Thread {
         robot.mouseMove(x2, y2);
         robot.mouseMove(x2, y2);
         robot.mouseMove(x2, y2);
-        robot.delay(500);
+        robot.delay(300);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-        robot.delay(500);
+        robot.delay(300);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        if(promotion){
+            robot.delay(300);
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.delay(300);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        }
         
         
         
