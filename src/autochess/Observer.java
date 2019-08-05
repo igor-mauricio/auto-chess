@@ -199,7 +199,10 @@ public class Observer extends Thread {
             Board.enemyMove=true;
             System.out.println(Board.history);
             
+        } else if(Board.getBestMove().equals("")&&Board.white){
+            Board.enemyMove=true;
         }
+            
         
         
     }
@@ -245,7 +248,10 @@ public class Observer extends Thread {
             int y1=Integer.parseInt(""+Board.getBestMove().charAt(1))-1;
             int x2=charToNumber(Board.getBestMove().charAt(2));
             int y2= Integer.parseInt(""+Board.getBestMove().charAt(3))-1;
-            
+            if(Board.white){
+                y1=7-y1;
+                y2=7-y2;
+            }
             performMove(x1,y1,x2,y2,(Board.getBestMove().length()>4));
             Board.setBestMove("");
             if(Board.board[y1][x1]=='K'){
@@ -291,6 +297,10 @@ public class Observer extends Thread {
             }
             Board.board[y2][x2]= Board.board[y1][x1];
             Board.board[y1][x1]= '-';
+            if(Board.white){
+                y1=7-y1;
+                y2=7-y2;
+            }
             Board.history+=" "+charMove(y1,x1,y2,x2);
             if(Board.getBestMove().length()>4)
                  Board.history+="q";
@@ -299,6 +309,7 @@ public class Observer extends Thread {
     }
     public void performMove(int x1,int y1, int x2, int y2, boolean promotion){
         System.out.println("BEST MOVE IN NUMBERS ->"+x1+y1+x2+y2);
+        
         if(!Board.getCompetitive()){
             x1 = 169 + x1*111 + 55;
             y1 = 101 + y1*111 + 55;

@@ -79,7 +79,7 @@ public class AutoChess extends Thread {
                     while(true){
                         if(Board.enemyMove){
                             String message = "position startpos moves"+Board.history+"\n"
-                            + "go movetime " +((rand.nextInt(10)+6)*1000)+"\n";
+                            + "go movetime 100\n" ;//+((rand.nextInt(10)+6)*1000)+"\n";
                             System.out.println("Movimento Inimigo! Procurando bestmove");
                             Board.enemyMove=false;
                             System.out.println(message);
@@ -101,7 +101,7 @@ public class AutoChess extends Thread {
                         while(true){
                             if(Board.enemyMove){
                                 String message = "position startpos moves"+Board.history+"\n"
-                                + "go movetime " +((rand.nextInt(7)+6)*1000)+"\n";
+                                + "go movetime 100\n";// +((rand.nextInt(7)+6)*1000)+"\n";
                                 System.out.println("Movimento Inimigo! Procurando bestmove");
                                 Board.enemyMove=false;
                                 System.out.println(message);
