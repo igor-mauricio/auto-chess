@@ -202,8 +202,9 @@ public class Observer extends Thread {
             Board.enemyMove=true;
             System.out.println(Board.history);
             
-        } else if(Board.getBestMove().equals("")&&Board.white){
+        } else if(Board.getBestMove().equals("")&&Board.white&&!Board.waiter){
             Board.enemyMove=true;
+            Board.waiter=true;
         }
             
         
@@ -307,6 +308,8 @@ public class Observer extends Thread {
             Board.history+=" "+charMove(y1,x1,y2,x2);
             if(Board.getBestMove().length()>4)
                  Board.history+="q";
+            
+            Board.waiter=false;
             
         }
     }

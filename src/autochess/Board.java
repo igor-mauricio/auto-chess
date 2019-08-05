@@ -15,6 +15,7 @@ public class Board {
     public static boolean white = true;
     public static boolean enemyMove = false;
     public static boolean ingame = true;
+    public static boolean waiter = false;
     public static boolean competitive = false;
     public static char board[][];
     public static String bestMove="";
