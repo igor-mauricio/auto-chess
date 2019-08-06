@@ -38,7 +38,7 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jButtonBot = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButtonOn = new javax.swing.JButton();
         jLabelSide = new javax.swing.JLabel();
@@ -48,10 +48,10 @@ public class GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Bot");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBot.setText("Bot");
+        jButtonBot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonBotActionPerformed(evt);
             }
         });
 
@@ -95,7 +95,7 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jButtonBot)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -115,7 +115,7 @@ public class GUI extends javax.swing.JFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jLabelSide))
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonBot, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
         );
@@ -123,9 +123,14 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonBotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBotActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        Board.competitive=!Board.competitive;
+        if(Board.competitive)
+            jButtonBot.setText("Competitive");
+        else
+            jButtonBot.setText("Bot");
+    }//GEN-LAST:event_jButtonBotActionPerformed
 
     private void jButtonOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOnActionPerformed
         // TODO add your handling code here:
@@ -190,7 +195,7 @@ public class GUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonBot;
     private javax.swing.JButton jButtonCheckGame;
     private javax.swing.JButton jButtonOn;
     private javax.swing.JLabel jLabel1;

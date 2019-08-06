@@ -175,7 +175,7 @@ public class Observer extends Thread {
                         Board.board[0][2]= 'r';
                         Board.board[0][3]= '-';
                         
-                        Board.history+=" "+charMove(7,3,7,1);
+                        Board.history+=" "+charMove(0,3,0,1);
                     }else{
                         Board.board[0][3]= '-';
                         Board.board[0][4]= 'r';
@@ -183,7 +183,7 @@ public class Observer extends Thread {
                         Board.board[0][6]= '-';
                         Board.board[0][7]= '-';
                         
-                        Board.history+=" "+charMove(7,3,7,5);
+                        Board.history+=" "+charMove(0,3,0,5);
                     }
                 }
                 
@@ -198,6 +198,12 @@ public class Observer extends Thread {
                     Board.history+=" "+charMove(7-move[0][0],move[0][1],7-move[1][0],move[1][1]);
                 else
                 Board.history+=" "+charMove(move[0][0],move[0][1],move[1][0],move[1][1]);
+                
+                if((Board.board[move[1][0]][move[1][1]]=='p'||Board.board[move[1][0]][move[1][1]]=='P'||
+                    Board.board[move[0][0]][move[0][1]]=='p'||Board.board[move[0][0]][move[0][1]]=='P')
+                        
+                        &&(move[0][0]==7||move[0][0]==0||move[1][0]==7||move[1][0]==0))
+                    Board.history+="q";
                 
             }
             Board.enemyMove=true;
@@ -285,24 +291,24 @@ public class Observer extends Thread {
                         Board.history+=" "+charMove(0,4,0,6);
                         noteee=true;
                     } 
-                }else{
-                    if(x1==3&&x2 == 7){
+                }else{//3757
+                    if(x1==3&&x2 == 1){
                         
                         Board.board[7][0]= '-';
-                        Board.board[7][1]= 'k';
-                        Board.board[7][2]= 'r';
+                        Board.board[7][1]= 'K';
+                        Board.board[7][2]= 'R';
                         Board.board[7][3]= '-';
                         
-                        Board.history+=" "+charMove(0,3,0,1);
+                        Board.history+=" "+charMove(7,3,7,1);
                         noteee=true;
-                    }else if(x1==3&&x2==2){
+                    }else if(x1==3&&x2==5){
                         Board.board[7][3]= '-';
-                        Board.board[7][4]= 'r';
-                        Board.board[7][5]= 'k';
+                        Board.board[7][4]= 'R';
+                        Board.board[7][5]= 'K';
                         Board.board[7][6]= '-';
                         Board.board[7][7]= '-';
                         
-                        Board.history+=" "+charMove(0,3,0,5);
+                        Board.history+=" "+charMove(7,3,7,5);
                         noteee=true;
                     }
                 }
