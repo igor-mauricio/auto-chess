@@ -31,7 +31,8 @@ public class AutoChess extends Thread {
         try{
         obs= new Observer();
         
-        Process processo = Runtime.getRuntime().exec("C:\\Users\\Godofga\\Desktop\\stockfish-10-win\\Windows\\stockfish_10_x64.exe");
+        //Process processo = Runtime.getRuntime().exec("C:\\Users\\Godofga\\Desktop\\stockfish-10-win\\Windows\\stockfish_10_x64.exe");
+        Process processo = Runtime.getRuntime().exec("C:\\Users\\Godofga\\Desktop\\komodo\\Windows\\komodo-10-64bit.exe");
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(processo.getOutputStream()));
         BufferedReader in = new BufferedReader(new InputStreamReader(processo.getInputStream()));
         String input;

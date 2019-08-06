@@ -268,7 +268,7 @@ public class Observer extends Thread {
                 System.out.println("ROOOOOUE! (ou movimento comum com o rei)"+x1+y1+x2+y2);
                 
                 if(Board.white){
-                    if((x2 == 2)){
+                    if((x1==4&&x2 == 2)){
                         
                         Board.board[7][0]= '-';
                         Board.board[7][1]= '-';
@@ -277,7 +277,7 @@ public class Observer extends Thread {
                         Board.board[7][4]= '-';
                         Board.history+=" "+charMove(0,4,0,2);
                         noteee=true;
-                    }else if (x2==6){
+                    }else if (x1==4&&x2==6){
                         Board.board[7][4]= '-';
                         Board.board[7][5]= 'R';
                         Board.board[7][6]= 'K';
@@ -286,7 +286,7 @@ public class Observer extends Thread {
                         noteee=true;
                     } 
                 }else{
-                    if(x2 == 7){
+                    if(x1==3&&x2 == 7){
                         
                         Board.board[7][0]= '-';
                         Board.board[7][1]= 'k';
@@ -295,7 +295,7 @@ public class Observer extends Thread {
                         
                         Board.history+=" "+charMove(0,3,0,1);
                         noteee=true;
-                    }else if(x2==2){
+                    }else if(x1==3&&x2==2){
                         Board.board[7][3]= '-';
                         Board.board[7][4]= 'r';
                         Board.board[7][5]= 'k';
