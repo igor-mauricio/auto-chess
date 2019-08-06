@@ -157,7 +157,7 @@ public class Observer extends Thread {
                         Board.board[0][5]= 'r';
                         Board.board[0][6]= 'k';
                         Board.board[0][7]= '-';
-                        Board.history+=" "+charMove(0,4,0,6);
+                        Board.history+=" "+charMove(7,4,7,6);
                     }else{
                         
                         Board.board[0][0]= '-';
@@ -165,7 +165,7 @@ public class Observer extends Thread {
                         Board.board[0][2]= 'k';
                         Board.board[0][3]= 'r';
                         Board.board[0][4]= '-';
-                        Board.history+=" "+charMove(0,4,0,4);
+                        Board.history+=" "+charMove(7,4,7,4);
                     }
                 }else{
                     if(move[0][1]==0 || move[2][1]==0){
@@ -175,7 +175,7 @@ public class Observer extends Thread {
                         Board.board[0][2]= 'r';
                         Board.board[0][3]= '-';
                         
-                        Board.history+=" "+charMove(0,3,0,1);
+                        Board.history+=" "+charMove(7,3,7,1);
                     }else{
                         Board.board[0][3]= '-';
                         Board.board[0][4]= 'r';
@@ -183,7 +183,7 @@ public class Observer extends Thread {
                         Board.board[0][6]= '-';
                         Board.board[0][7]= '-';
                         
-                        Board.history+=" "+charMove(0,3,0,5);
+                        Board.history+=" "+charMove(7,3,7,5);
                     }
                 }
                 
@@ -257,7 +257,11 @@ public class Observer extends Thread {
                 y1=7-y1;
                 y2=7-y2;
             }
-            performMove(x1,y1,x2,y2,(Board.getBestMove().length()>4));
+            boolean promotioon=false; 
+            if(Board.getBestMove().length()>4&&(Board.board[y2][x2]=='P'||Board.board[y2][x2]=='p'))
+                if(Board.getBestMove().charAt(4)=='q'||Board.getBestMove().charAt(4)=='r'||Board.getBestMove().charAt(4)=='b'||Board.getBestMove().charAt(4)=='n')
+                    promotioon=true;
+            performMove(x1,y1,x2,y2,promotioon);
             Board.setBestMove("");
             boolean noteee=false;
             if(Board.board[y1][x1]=='K'){//4767
@@ -268,17 +272,17 @@ public class Observer extends Thread {
                         
                         Board.board[7][0]= '-';
                         Board.board[7][1]= '-';
-                        Board.board[7][2]= 'k';
-                        Board.board[7][3]= 'r';
+                        Board.board[7][2]= 'K';
+                        Board.board[7][3]= 'R';
                         Board.board[7][4]= '-';
-                        Board.history+=" "+charMove(7,4,7,2);
+                        Board.history+=" "+charMove(0,4,0,2);
                         noteee=true;
                     }else if (x2==6){
                         Board.board[7][4]= '-';
-                        Board.board[7][5]= 'r';
-                        Board.board[7][6]= 'k';
+                        Board.board[7][5]= 'R';
+                        Board.board[7][6]= 'K';
                         Board.board[7][7]= '-';
-                        Board.history+=" "+charMove(7,4,7,6);
+                        Board.history+=" "+charMove(0,4,0,6);
                         noteee=true;
                     } 
                 }else{
@@ -289,7 +293,7 @@ public class Observer extends Thread {
                         Board.board[7][2]= 'r';
                         Board.board[7][3]= '-';
                         
-                        Board.history+=" "+charMove(7,3,7,1);
+                        Board.history+=" "+charMove(0,3,0,1);
                         noteee=true;
                     }else if(x2==2){
                         Board.board[7][3]= '-';
@@ -298,7 +302,7 @@ public class Observer extends Thread {
                         Board.board[7][6]= '-';
                         Board.board[7][7]= '-';
                         
-                        Board.history+=" "+charMove(7,3,7,5);
+                        Board.history+=" "+charMove(0,3,0,5);
                         noteee=true;
                     }
                 }
@@ -314,7 +318,8 @@ public class Observer extends Thread {
             if(!noteee)
                 Board.history+=" "+charMove(y1,x1,y2,x2);
             if(Board.getBestMove().length()>4&&(Board.board[y2][x2]=='P'||Board.board[y2][x2]=='p'))
-                 Board.history+="q";
+                if(Board.getBestMove().charAt(4)=='q'||Board.getBestMove().charAt(4)=='r'||Board.getBestMove().charAt(4)=='b'||Board.getBestMove().charAt(4)=='n')
+                    Board.history+="q";
             
             Board.waiter=false;
             
@@ -459,13 +464,13 @@ public class Observer extends Thread {
         ret+=""+Integer.toString(x2+1);
         
         
-        if((Board.board[x2][y2]=='p'||Board.board[x1][y1]=='P')&&(x1==0||x2==7)){
-            ret+="q";
-            if(Board.board[x2][y2]=='p')
-                Board.board[x2][y2]='q';
-            else
-                Board.board[x2][y2]='Q';
-        }
+//        if((Board.board[x2][y2]=='p'||Board.board[x1][y1]=='P')&&(x1==0||x2==7)){
+//            ret+="q";
+//            if(Board.board[x2][y2]=='p')
+//                Board.board[x2][y2]='q';
+//            else
+//                Board.board[x2][y2]='Q';
+//        }
         return ret;
         
     }
