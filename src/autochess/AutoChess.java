@@ -6,8 +6,10 @@
 package autochess;
 
 import java.awt.AWTException;
+import java.awt.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -47,6 +49,8 @@ public class AutoChess extends javax.swing.JFrame {
         setTitle("AutoChess");
         setBackground(new java.awt.Color(51, 0, 153));
         setForeground(new java.awt.Color(102, 0, 153));
+        setIconImage(new ImageIcon("/src/images/icon.ico").getImage()
+        );
 
         jButtonBot.setText("Bot");
         jButtonBot.addActionListener(new java.awt.event.ActionListener() {

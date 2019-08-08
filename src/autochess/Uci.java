@@ -26,7 +26,7 @@ public class Uci extends Thread {
             obs= new Automation();
             
             //Diretório da engine que usa protocolo UCI
-            Process processo = Runtime.getRuntime().exec("src/Engines/komodo-10-64bit.exe");
+            Process processo = Runtime.getRuntime().exec("src/engines/komodo-10-64bit.exe");
             
             //Buffers de entrada e saída
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(processo.getOutputStream()));
