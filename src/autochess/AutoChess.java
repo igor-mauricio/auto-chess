@@ -44,6 +44,9 @@ public class AutoChess extends javax.swing.JFrame {
         jButtonResolucao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("AutoChess");
+        setBackground(new java.awt.Color(51, 0, 153));
+        setForeground(new java.awt.Color(102, 0, 153));
 
         jButtonBot.setText("Bot");
         jButtonBot.addActionListener(new java.awt.event.ActionListener() {
@@ -61,7 +64,7 @@ public class AutoChess extends javax.swing.JFrame {
 
         jLabelSide.setText("You're playing with *** pieces!");
 
-        jButtonResolucao.setText("Resolução:1050p");
+        jButtonResolucao.setText("Resolution:1050p");
         jButtonResolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonResolucaoActionPerformed(evt);
@@ -73,29 +76,31 @@ public class AutoChess extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelSide)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonResolucao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonBot))
-                    .addComponent(jLabelSide))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonBot)))
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabelSide)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBot, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonResolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelSide)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonResolucao)
+                            .addComponent(jButtonBot))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -130,15 +135,15 @@ public class AutoChess extends javax.swing.JFrame {
         switch(Database.getResolucao()){
             //1680x1050
             case 0:
-                jButtonResolucao.setText("Resolução:1050p");
+                jButtonResolucao.setText("Resolution:1050p");
                 break;
             //1920x1080
             case 1:
-                jButtonResolucao.setText("Resolução:1080p");
+                jButtonResolucao.setText("Resolution:1080p");
                 break;
             //1600x900
             case 2:
-                jButtonResolucao.setText("Resolução:900p");
+                jButtonResolucao.setText("Resolution:900p");
                 break;
         }
         

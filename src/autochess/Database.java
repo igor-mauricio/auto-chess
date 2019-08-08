@@ -14,6 +14,7 @@ public class Database {
     private static boolean enemyMove = false;
     //Modo de jogo
     private static boolean competitive = false;
+    //Aguardar o próprio movimento antes de requerir uma nova predição
     private static boolean waiter = false;
     //Array do tabuleiro virtual
     private static char board[][];

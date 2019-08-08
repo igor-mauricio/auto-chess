@@ -265,7 +265,7 @@ public class Automation extends Thread {
             Database.setEnemyMove(true);
             System.out.println(Database.getHistory());
             
-        } else if(Database.getHistory().equals("")&&Database.getWhite()){
+        } else if(Database.getHistory().equals("")&&Database.getWhite()&&Database.getWaiter()){
             Database.setEnemyMove(true);
         }
         
@@ -388,7 +388,7 @@ public class Automation extends Thread {
                 if(Database.getBestMove().charAt(4)=='q'||Database.getBestMove().charAt(4)=='r'||Database.getBestMove().charAt(4)=='b'||Database.getBestMove().charAt(4)=='n')
                     Database.setHistory(Database.getHistory()+"q");
             
-            
+            Database.setWaiter(false);
         }
     }
     public void performMove(int x1,int y1, int x2, int y2, boolean promotion){
@@ -569,14 +569,6 @@ public class Automation extends Thread {
         }
         ret+=""+Integer.toString(x2+1);
         
-        
-//        if((Database.board[x2][y2]=='p'||Database.board[x1][y1]=='P')&&(x1==0||x2==7)){
-//            ret+="q";
-//            if(Database.board[x2][y2]=='p')
-//                Database.board[x2][y2]='q';
-//            else
-//                Database.board[x2][y2]='Q';
-//        }
         return ret;
         
     }
@@ -600,33 +592,3 @@ public class Automation extends Thread {
         }}
     
    }
-/*
-    BOT
-    
-    169,101 top-left
-    1056,988 bottom-right
-    
-    888 x 888 board size
-    
-    111x111 square size 
-    
-    225x196 first pixel piece
-    226 194   f p p Texture
-    777,358 new game button
-    
-    COMP
-    
-    117,136 top-left
-    924,943 bottom-rigt
-    
-    808 x 808 board size
-    
-    101x101 square size
-    
-    168,220 fist pixel piece
-    
-    508,520 new game button
-    
-    */
-
-//
