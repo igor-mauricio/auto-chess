@@ -6,141 +6,202 @@
 package autochess;
 
 import java.awt.AWTException;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Random;
 
 /**
  *
  * @author Godofga
  */
-public class AutoChess extends Thread {
-
+public class AutoChess extends javax.swing.JFrame {
+    Automation obs;
+    boolean running = false;
     /**
+     * Creates new form GUI
      */
-    Observer obs;
-    Random rand = new Random();
-    
-    @Override
-    public void run()  {
-        try{
-        obs= new Observer();
-        
-        //Process processo = Runtime.getRuntime().exec("C:\\Users\\Godofga\\Desktop\\stockfish-10-win\\Windows\\stockfish_10_x64.exe");
-        Process processo = Runtime.getRuntime().exec("C:\\Users\\Godofga\\Desktop\\komodo\\Windows\\komodo-10-64bit.exe");
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(processo.getOutputStream()));
-        BufferedReader in = new BufferedReader(new InputStreamReader(processo.getInputStream()));
-        String input;
-        out.write("uci\n");
-        System.out.println("->\nuci\n<-\n");
-        out.flush();
-        
-            while((input = in.readLine()) !=null){
-                //System.out.println(input);
-                //System.out.println("-----");
-                if(input.equals("uciok")){
-
-                    String options = 
-    //                        "setoption name Contempt value 24\n"+
-    //                        "setoption name Analysis Contempt value Both\n"+
-    //                        "setoption name Threads value 1\n"+
-                            "setoption name Hash value 128\n"
-    //                      + "setoption name Ponder value false\n"+
-    //                        "setoption name MultiPV value 1\n"+
-    //                        "setoption name Skill Level value 20\n"+
-    //                        "setoption name Move Overhead value 30\n"+
-    //                        "setoption name Minimum Thinking Time value 20\n"+
-    //                        "setoption name Slow Mover value 84\n"+
-    //                        "setoption name nodestime value 0\n"+
-    //                        "setoption name UCI_Chess960 value false\n"+
-    //                        "setoption name UCI_AnalyseMode value false\n"+
-    //                        "setoption name SyzygyPath value <empty>\n"+
-    //                        "setoption name SyzygyProbeDepth value 1\n"+
-    //                        "setoption name Slow Mover value 84\n"+
-    //                        "setoption name Syzygy50MoveRule value true\n"+
-    //                        "setoption name SyzygyProbeLimit value 7\n"+
-                            //"isready\n"
-                            ;
-
-                    out.write(options);
-                    System.out.println("->\n"+options+"<-\n");
-
-                    //Start game
-                    String newGame = "ucinewgame\n"
-                            + "setoption name UCI_AnalyseMode value true\n";
-                    out.write(newGame);
-                    System.out.println("->\n"+newGame+"<-\n");
-                     
-                     System.out.println("Esperando movimentos inimigos");
-                    while(true){
-                        if(Board.enemyMove&&!Board.waiter){
-                            
-                                
-                            String message = "position startpos moves"+Board.history+"\n"
-                            + "go movetime " +((rand.nextInt(1)+6)*1000)+"\n";
-                            System.out.println("Movimento Inimigo! Procurando bestmove");
-                            Board.enemyMove=false;
-                            System.out.println(message);
-                            out.write(message);
-                            Board.waiter=true;
-                            break;
-                            
-                        }
-                        Thread.sleep(1000);
-                    }
-                    out.flush();
-                    System.out.println("endloop");
-                }
-                if(input.contains("bestmove")){
-                    System.out.println(input);
-                        if(input.charAt(13)!=' ')
-                            Board.setBestMove(""+input.charAt(9)+input.charAt(10)+input.charAt(11)+input.charAt(12)+input.charAt(13));
-                        else{
-                            Board.setBestMove(""+input.charAt(9)+input.charAt(10)+input.charAt(11)+input.charAt(12));
-                        }
-                        
-                        while(true){
-                            if(Board.enemyMove){
-                                String message = "position startpos moves"+Board.history+"\n"
-                                + "go movetime " +((rand.nextInt(1)+6)*1000)+"\n";
-                                System.out.println("Movimento Inimigo! Procurando bestmove");
-                                Board.enemyMove=false;
-                                System.out.println(message);
-                                out.write(message);
-                                break;
-                            }
-                            Thread.sleep(1000);
-                        }
-                    out.flush();
-                        
-                    }
-                
-                
-             }
-            System.out.println("Looop finished");
-            
-            
-        
-                    
-                
-            
-        
+    public AutoChess() {
+        initComponents();
+        try {
+            obs= new Automation();
+            Database.resetBoard();
         } catch (AWTException ex) {
             Logger.getLogger(AutoChess.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(AutoChess.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(AutoChess.class.getName()).log(Level.SEVERE, null, ex);
-        }}
-    
-    
-//                out.write("quit\n");
-//                processo.destroy();
-    
-    
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jButtonBot = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButtonOn = new javax.swing.JButton();
+        jLabelSide = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaBoard = new javax.swing.JTextArea();
+        jButtonCheckGame = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButtonBot.setText("Bot");
+        jButtonBot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBotActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Against:");
+
+        jButtonOn.setText("Turn on");
+        jButtonOn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOnActionPerformed(evt);
+            }
+        });
+
+        jLabelSide.setText("You're playing with *** pieces!");
+
+        jTextAreaBoard.setEditable(false);
+        jTextAreaBoard.setColumns(20);
+        jTextAreaBoard.setRows(5);
+        jTextAreaBoard.setText("_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_");
+        jTextAreaBoard.setAutoscrolls(false);
+        jScrollPane1.setViewportView(jTextAreaBoard);
+
+        jButtonCheckGame.setText("Check Game");
+        jButtonCheckGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCheckGameActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelSide)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonCheckGame)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonBot)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButtonCheckGame)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabelSide))
+                        .addComponent(jButtonBot, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonBotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBotActionPerformed
+        // TODO add your handling code here:
+        Database.setCompetitive(!Database.getCompetitive());
+        if(Database.competitive)
+            jButtonBot.setText("Competitive");
+        else
+            jButtonBot.setText("Bot");
+    }//GEN-LAST:event_jButtonBotActionPerformed
+
+    private void jButtonOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOnActionPerformed
+        // TODO add your handling code here:
+        if(!running){
+                obs.start();
+                obs.checkSide();
+                jLabelSide.setText(Database.white?"You are playing with white pieces":"You are playing with black pieces");
+                
+            
+        }
+        running = true;
+    }//GEN-LAST:event_jButtonOnActionPerformed
+
+    private void jButtonCheckGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckGameActionPerformed
+        // TODO add your handling code here:
+        String board = "";
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+               board+="_" + Database.getBoardCharAt(i,j);
+               
+            }board+="_\n";
+        }
+        jTextAreaBoard.setText(board);
+        System.out.println(board);
+        
+    }//GEN-LAST:event_jButtonCheckGameActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AutoChess.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AutoChess.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AutoChess.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AutoChess.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            new AutoChess().setVisible(true);
+            Uci channel = new Uci();
+            channel.start();
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBot;
+    private javax.swing.JButton jButtonCheckGame;
+    private javax.swing.JButton jButtonOn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelSide;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextAreaBoard;
+    // End of variables declaration//GEN-END:variables
 }

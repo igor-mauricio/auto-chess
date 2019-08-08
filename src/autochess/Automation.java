@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Godofga
  */
-public class Observer extends Thread {
+public class Automation extends Thread {
     
     public boolean started = false;
     public int[][] move = new int[4][2];
@@ -33,22 +33,22 @@ public class Observer extends Thread {
     //public final Color black1 = new Color(86,83,82);
     
     Robot robot;
-    public Observer() throws AWTException{
+    public Automation() throws AWTException{
         this.robot= new Robot();
         
     }
     public void checkSide(){
         Color piece;
         
-        if(Board.competitive)
+        if(Database.getCompetitive())
             piece = robot.getPixelColor(168,220);
         else
             piece = robot.getPixelColor(225,196);
         
         if(checkColor(piece)==1)
-            Board.setSide(false);
+            Database.setSide(false);
         else if(checkColor(piece)==2)
-            Board.setSide(true);
+            Database.setSide(true);
         
     }
     
@@ -74,7 +74,7 @@ public class Observer extends Thread {
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
                 int x, y;
-                if(!Board.competitive){
+                if(!Database.getCompetitive()){
                     x = 169 + j*111 + 55;
                     y = 101 + i*111 + 93;
                 }else{
@@ -84,18 +84,17 @@ public class Observer extends Thread {
                 
                     int pixel = checkColor(robot.getPixelColor(x, y));
                     int board;
-                    switch (Board.board[i][j]) {
+                    switch (Database.getBoardCharAt(i,j)) {
                         case 'R':
                         case 'N':
                         case 'B':
                         case 'Q':
                         case 'K':
                         case 'P':
-                            if(Board.white)
+                            if(Database.getWhite())
                                 board=1;
                             else
                                 board=2;
-                            
                             break;
                         case 'r':
                         case 'n':
@@ -103,7 +102,7 @@ public class Observer extends Thread {
                         case 'q':
                         case 'k':
                         case 'p':
-                            if(Board.white)
+                            if(Database.getWhite())
                                 board=2;
                             else
                                 board = 1;
@@ -126,8 +125,8 @@ public class Observer extends Thread {
                             }
                         }
                         else if(pixel==1||pixel==2){
-//                            if((Board.white&&pixel==2)||(!Board.white&&pixel==1)){
-//                                Board.enemyMove=true;
+//                            if((Database.white&&pixel==2)||(!Database.white&&pixel==1)){
+//                                Database.enemyMove=true;
 //                                
 //                            }
                             if(move[1][0]==-1){
@@ -151,39 +150,40 @@ public class Observer extends Thread {
             
             if(move[2][0]!=-1){
                 System.out.println("ROQUE INIMIGO!"+move[0][0]+move[0][1]+" - "+move[1][0]+move[1][1]+"|"+move[2][0]+move[2][1]+" - "+move[3][0]+move[3][1]);
-                if(Board.white){
+                if(Database.getWhite()){
                     if(move[0][1]==6 || move[2][1]==6|| move[2][1]==6 || move[3][1]==6){
-                        Board.board[0][4]= '-';
-                        Board.board[0][5]= 'r';
-                        Board.board[0][6]= 'k';
-                        Board.board[0][7]= '-';
-                        Board.history+=" "+charMove(7,4,7,6);
+                        Database.setBoardCharAt(0,4,'-');
+                        Database.setBoardCharAt(0,5,'r');
+                        Database.setBoardCharAt(0,6,'k');
+                        Database.setBoardCharAt(0,7,'-');
+                        Database.addHistory(charMove(7,4,7,6));
                     }else{
                         
-                        Board.board[0][0]= '-';
-                        Board.board[0][1]= '-';
-                        Board.board[0][2]= 'k';
-                        Board.board[0][3]= 'r';
-                        Board.board[0][4]= '-';
-                        Board.history+=" "+charMove(7,4,7,4);
+                        Database.setBoardCharAt(0,0,'-');
+                        Database.setBoardCharAt(0,1,'-');
+                        Database.setBoardCharAt(0,2,'k');
+                        Database.setBoardCharAt(0,3,'r');
+                        Database.setBoardCharAt(0,4,'-');
+                        Database.addHistory(charMove(7,4,7,2));
                     }
                 }else{
                     if(move[0][1]==0 || move[2][1]==0){
                         
-                        Board.board[0][0]= '-';
-                        Board.board[0][1]= 'k';
-                        Board.board[0][2]= 'r';
-                        Board.board[0][3]= '-';
+                        Database.setBoardCharAt(0,0,'-');
+                        Database.setBoardCharAt(0,1,'k');
+                        Database.setBoardCharAt(0,2,'r');
+                        Database.setBoardCharAt(0,3,'-');
+                        Database.addHistory(charMove(0,3,0,1));
                         
-                        Board.history+=" "+charMove(0,3,0,1);
                     }else{
-                        Board.board[0][3]= '-';
-                        Board.board[0][4]= 'r';
-                        Board.board[0][5]= 'k';
-                        Board.board[0][6]= '-';
-                        Board.board[0][7]= '-';
                         
-                        Board.history+=" "+charMove(0,3,0,5);
+                        Database.setBoardCharAt(0,3,'-');
+                        Database.setBoardCharAt(0,4,'r');
+                        Database.setBoardCharAt(0,5,'k');
+                        Database.setBoardCharAt(0,6,'-');
+                        Database.setBoardCharAt(0,7,'-');
+                        Database.addHistory(charMove(0,3,0,5));
+                        
                     }
                 }
                 
@@ -192,25 +192,25 @@ public class Observer extends Thread {
             }else{
                 System.out.println("\n move1: \n"+move[0][0]+"x"+move[0][1]+" - "+move[1][0]+"x"+move[1][1]);
                 System.out.println("\n move2: \n"+move[2][0]+"x"+move[2][1]+" - "+move[3][0]+"x"+move[3][1]);
-                Board.board[move[1][0]][move[1][1]]= Board.board[move[0][0]][move[0][1]];
-                Board.board[move[0][0]][move[0][1]]= '-';
-                if(Board.white)
-                    Board.history+=" "+charMove(7-move[0][0],move[0][1],7-move[1][0],move[1][1]);
+                Database.board[move[1][0]][move[1][1]]= Database.board[move[0][0]][move[0][1]];
+                Database.board[move[0][0]][move[0][1]]= '-';
+                if(Database.white)
+                    Database.history+=" "+charMove(7-move[0][0],move[0][1],7-move[1][0],move[1][1]);
                 else
-                Board.history+=" "+charMove(move[0][0],move[0][1],move[1][0],move[1][1]);
+                Database.history+=" "+charMove(move[0][0],move[0][1],move[1][0],move[1][1]);
                 
-                if((Board.board[move[1][0]][move[1][1]]=='p'||Board.board[move[1][0]][move[1][1]]=='P'||
-                    Board.board[move[0][0]][move[0][1]]=='p'||Board.board[move[0][0]][move[0][1]]=='P')
+                if((Database.board[move[1][0]][move[1][1]]=='p'||Database.board[move[1][0]][move[1][1]]=='P'||
+                    Database.board[move[0][0]][move[0][1]]=='p'||Database.board[move[0][0]][move[0][1]]=='P')
                         
                         &&(move[0][0]==7||move[0][0]==0||move[1][0]==7||move[1][0]==0))
-                    Board.history+="q";
+                    Database.history+="q";
                 
             }
-            Board.enemyMove=true;
-            System.out.println(Board.history);
+            Database.enemyMove=true;
+            System.out.println(Database.history);
             
-        } else if(Board.history.equals("")&&Board.white&&!Board.waiter){
-            Board.enemyMove=true;
+        } else if(Database.history.equals("")&&Database.white){
+            Database.enemyMove=true;
         }
         
             
@@ -247,94 +247,93 @@ public class Observer extends Thread {
                break;
                
         }
-        if(!Board.white){
+        if(!Database.white){
             number=7-number;
         }
         return number;
     }
     //bestmove e7e5 ponder g1e2
     public void checkBestMove(){
-        if(!Board.getBestMove().equals("")){
-            int x1=charToNumber(Board.getBestMove().charAt(0));
-            int y1=Integer.parseInt(""+Board.getBestMove().charAt(1))-1;
-            int x2=charToNumber(Board.getBestMove().charAt(2));
-            int y2= Integer.parseInt(""+Board.getBestMove().charAt(3))-1;
-            if(Board.white){
+        if(!Database.getBestMove().equals("")){
+            int x1=charToNumber(Database.getBestMove().charAt(0));
+            int y1=Integer.parseInt(""+Database.getBestMove().charAt(1))-1;
+            int x2=charToNumber(Database.getBestMove().charAt(2));
+            int y2= Integer.parseInt(""+Database.getBestMove().charAt(3))-1;
+            if(Database.white){
                 y1=7-y1;
                 y2=7-y2;
             }
             boolean promotioon=false; 
-            if(Board.getBestMove().length()>4&&(Board.board[y2][x2]=='P'||Board.board[y2][x2]=='p'))
-                if(Board.getBestMove().charAt(4)=='q'||Board.getBestMove().charAt(4)=='r'||Board.getBestMove().charAt(4)=='b'||Board.getBestMove().charAt(4)=='n')
+            if(Database.getBestMove().length()>4&&(Database.board[y2][x2]=='P'||Database.board[y2][x2]=='p'))
+                if(Database.getBestMove().charAt(4)=='q'||Database.getBestMove().charAt(4)=='r'||Database.getBestMove().charAt(4)=='b'||Database.getBestMove().charAt(4)=='n')
                     promotioon=true;
             performMove(x1,y1,x2,y2,promotioon);
-            Board.setBestMove("");
+            Database.setBestMove("");
             boolean noteee=false;
-            if(Board.board[y1][x1]=='K'){//4767
+            if(Database.board[y1][x1]=='K'){//4767
                 System.out.println("ROOOOOUE! (ou movimento comum com o rei)"+x1+y1+x2+y2);
                 
-                if(Board.white){
+                if(Database.white){
                     if((x1==4&&x2 == 2)){
                         
-                        Board.board[7][0]= '-';
-                        Board.board[7][1]= '-';
-                        Board.board[7][2]= 'K';
-                        Board.board[7][3]= 'R';
-                        Board.board[7][4]= '-';
-                        Board.history+=" "+charMove(0,4,0,2);
+                        Database.board[7][0]= '-';
+                        Database.board[7][1]= '-';
+                        Database.board[7][2]= 'K';
+                        Database.board[7][3]= 'R';
+                        Database.board[7][4]= '-';
+                        Database.history+=" "+charMove(0,4,0,2);
                         noteee=true;
                     }else if (x1==4&&x2==6){
-                        Board.board[7][4]= '-';
-                        Board.board[7][5]= 'R';
-                        Board.board[7][6]= 'K';
-                        Board.board[7][7]= '-';
-                        Board.history+=" "+charMove(0,4,0,6);
+                        Database.board[7][4]= '-';
+                        Database.board[7][5]= 'R';
+                        Database.board[7][6]= 'K';
+                        Database.board[7][7]= '-';
+                        Database.history+=" "+charMove(0,4,0,6);
                         noteee=true;
                     } 
                 }else{//3757
                     if(x1==3&&x2 == 1){
                         
-                        Board.board[7][0]= '-';
-                        Board.board[7][1]= 'K';
-                        Board.board[7][2]= 'R';
-                        Board.board[7][3]= '-';
+                        Database.board[7][0]= '-';
+                        Database.board[7][1]= 'K';
+                        Database.board[7][2]= 'R';
+                        Database.board[7][3]= '-';
                         
-                        Board.history+=" "+charMove(7,3,7,1);
+                        Database.history+=" "+charMove(7,3,7,1);
                         noteee=true;
                     }else if(x1==3&&x2==5){
-                        Board.board[7][3]= '-';
-                        Board.board[7][4]= 'R';
-                        Board.board[7][5]= 'K';
-                        Board.board[7][6]= '-';
-                        Board.board[7][7]= '-';
+                        Database.board[7][3]= '-';
+                        Database.board[7][4]= 'R';
+                        Database.board[7][5]= 'K';
+                        Database.board[7][6]= '-';
+                        Database.board[7][7]= '-';
                         
-                        Board.history+=" "+charMove(7,3,7,5);
+                        Database.history+=" "+charMove(7,3,7,5);
                         noteee=true;
                     }
                 }
                 
                 
             }if(!noteee){
-            Board.board[y2][x2]= Board.board[y1][x1];
-            Board.board[y1][x1]= '-';}
-            if(Board.white){
+            Database.board[y2][x2]= Database.board[y1][x1];
+            Database.board[y1][x1]= '-';}
+            if(Database.white){
                 y1=7-y1;
                 y2=7-y2;
             }
             if(!noteee)
-                Board.history+=" "+charMove(y1,x1,y2,x2);
-            if(Board.getBestMove().length()>4&&(Board.board[y2][x2]=='P'||Board.board[y2][x2]=='p'))
-                if(Board.getBestMove().charAt(4)=='q'||Board.getBestMove().charAt(4)=='r'||Board.getBestMove().charAt(4)=='b'||Board.getBestMove().charAt(4)=='n')
-                    Board.history+="q";
+                Database.history+=" "+charMove(y1,x1,y2,x2);
+            if(Database.getBestMove().length()>4&&(Database.board[y2][x2]=='P'||Database.board[y2][x2]=='p'))
+                if(Database.getBestMove().charAt(4)=='q'||Database.getBestMove().charAt(4)=='r'||Database.getBestMove().charAt(4)=='b'||Database.getBestMove().charAt(4)=='n')
+                    Database.history+="q";
             
-            Board.waiter=false;
             
         }
     }
     public void performMove(int x1,int y1, int x2, int y2, boolean promotion){
         System.out.println("BEST MOVE IN NUMBERS ->"+x1+y1+x2+y2);
         
-        if(!Board.getCompetitive()){
+        if(!Database.getCompetitive()){
             x1 = 169 + x1*111 + 55;
             y1 = 101 + y1*111 + 55;
             x2 = 169 + x2*111 + 55;
@@ -390,7 +389,7 @@ public class Observer extends Thread {
     }
     public String charMove(int x1,int y1, int x2, int y2){
         String ret="";
-        if(!Board.white){
+        if(!Database.white){
             x1=7-x1;
             y1=7-y1;
             x2=7-x2;
@@ -421,7 +420,7 @@ public class Observer extends Thread {
             case 7:
                 ret+="h";
                 break;
-        }if(!Board.white){
+        }if(!Database.white){
             x1=7-x1;
             y1=7-y1;
             x2=7-x2;
@@ -429,7 +428,7 @@ public class Observer extends Thread {
         }
         
         ret+=""+Integer.toString(x1+1);
-        if(!Board.white){
+        if(!Database.white){
             x1=7-x1;
             y1=7-y1;
             x2=7-x2;
@@ -461,7 +460,7 @@ public class Observer extends Thread {
                 ret+="h";
                 break;
         }
-        if(!Board.white){
+        if(!Database.white){
             x1=7-x1;
             y1=7-y1;
             x2=7-x2;
@@ -470,12 +469,12 @@ public class Observer extends Thread {
         ret+=""+Integer.toString(x2+1);
         
         
-//        if((Board.board[x2][y2]=='p'||Board.board[x1][y1]=='P')&&(x1==0||x2==7)){
+//        if((Database.board[x2][y2]=='p'||Database.board[x1][y1]=='P')&&(x1==0||x2==7)){
 //            ret+="q";
-//            if(Board.board[x2][y2]=='p')
-//                Board.board[x2][y2]='q';
+//            if(Database.board[x2][y2]=='p')
+//                Database.board[x2][y2]='q';
 //            else
-//                Board.board[x2][y2]='Q';
+//                Database.board[x2][y2]='Q';
 //        }
         return ret;
         
@@ -496,7 +495,7 @@ public class Observer extends Thread {
         
         
         } catch (InterruptedException ex) {
-                Logger.getLogger(Observer.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Automation.class.getName()).log(Level.SEVERE, null, ex);
         }}
     
    }
