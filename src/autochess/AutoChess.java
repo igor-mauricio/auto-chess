@@ -39,12 +39,8 @@ public class AutoChess extends javax.swing.JFrame {
     private void initComponents() {
 
         jButtonBot = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jButtonOn = new javax.swing.JButton();
         jLabelSide = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaBoard = new javax.swing.JTextArea();
-        jButtonCheckGame = new javax.swing.JButton();
         jButtonResolucao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -56,8 +52,6 @@ public class AutoChess extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Against:");
-
         jButtonOn.setText("Turn on");
         jButtonOn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,20 +60,6 @@ public class AutoChess extends javax.swing.JFrame {
         });
 
         jLabelSide.setText("You're playing with *** pieces!");
-
-        jTextAreaBoard.setEditable(false);
-        jTextAreaBoard.setColumns(20);
-        jTextAreaBoard.setRows(5);
-        jTextAreaBoard.setText("_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_\n_-_-_-_-_-_-_-_-_");
-        jTextAreaBoard.setAutoscrolls(false);
-        jScrollPane1.setViewportView(jTextAreaBoard);
-
-        jButtonCheckGame.setText("Check Game");
-        jButtonCheckGame.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCheckGameActionPerformed(evt);
-            }
-        });
 
         jButtonResolucao.setText("Resolução:1050p");
         jButtonResolucao.addActionListener(new java.awt.event.ActionListener() {
@@ -93,45 +73,29 @@ public class AutoChess extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonResolucao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonCheckGame)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonBot))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabelSide)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonResolucao)))
-                        .addGap(0, 50, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
-                .addContainerGap())
+                        .addComponent(jButtonBot))
+                    .addComponent(jLabelSide))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButtonCheckGame)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabelSide))
-                        .addComponent(jButtonBot, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonResolucao, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+                .addComponent(jLabelSide)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBot, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonResolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,7 +105,7 @@ public class AutoChess extends javax.swing.JFrame {
         // TODO add your handling code here:
         Database.setCompetitive(!Database.getCompetitive());
         if(Database.getCompetitive())
-            jButtonBot.setText("Competitive");
+            jButtonBot.setText("Comp");
         else
             jButtonBot.setText("Bot");
     }//GEN-LAST:event_jButtonBotActionPerformed
@@ -157,20 +121,6 @@ public class AutoChess extends javax.swing.JFrame {
         }
         running = true;
     }//GEN-LAST:event_jButtonOnActionPerformed
-
-    private void jButtonCheckGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckGameActionPerformed
-        // TODO add your handling code here:
-        String board = "";
-        for(int i=0;i<8;i++){
-            for(int j=0;j<8;j++){
-               board+="_" + Database.getBoardCharAt(i,j);
-               
-            }board+="_\n";
-        }
-        jTextAreaBoard.setText(board);
-        System.out.println(board);
-        
-    }//GEN-LAST:event_jButtonCheckGameActionPerformed
 
     private void jButtonResolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolucaoActionPerformed
         // TODO add your handling code here:
@@ -234,12 +184,8 @@ public class AutoChess extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBot;
-    private javax.swing.JButton jButtonCheckGame;
     private javax.swing.JButton jButtonOn;
     private javax.swing.JButton jButtonResolucao;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelSide;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaBoard;
     // End of variables declaration//GEN-END:variables
 }

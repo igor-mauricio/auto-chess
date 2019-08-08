@@ -14,6 +14,7 @@ public class Database {
     private static boolean enemyMove = false;
     //Modo de jogo
     private static boolean competitive = false;
+    private static boolean waiter = false;
     //Array do tabuleiro virtual
     private static char board[][];
     //Melhor jogada
@@ -112,6 +113,12 @@ public class Database {
     }
     public static void setResolucao(int resolucao){
          Database.resolucao = resolucao;
+    }
+    public static boolean getWaiter(){
+        return Database.waiter;
+    }
+    public static void setWaiter(boolean newWaiter){
+        Database.waiter= newWaiter;
     }
     
     

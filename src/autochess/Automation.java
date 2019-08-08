@@ -108,8 +108,8 @@ public class Automation extends Thread {
                             y = 101 + i*111 + 93;
                         break;
                         case 1:
-                            x = 281 + j*113 + 56;
-                            y = 101 + i*113 + 94;
+                            x = 297 + j*109 + 56;
+                            y = 134 + i*109 + 90;
                         break;
                         case 2:
                             x = 209 + j*91 + 52;
@@ -404,10 +404,10 @@ public class Automation extends Thread {
                             y2 = 101 + y2*111 + 55;
                         break;
                         case 1:
-                            x1 = 281 + x1*113 + 56;
-                            y1 = 101 + y1*113 + 56;
-                            x2 = 281 + x2*113 + 56;
-                            y2 = 101 + y2*113 + 56;
+                            x1 = 297 + x1*109 + 56;
+                            y1 = 134 + y1*109 + 56;
+                            x2 = 297 + x2*109 + 56;
+                            y2 = 134 + y2*109 + 56;
                         break;
                         case 2:
                             x1 = 209 + x1*91 + 45;

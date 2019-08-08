@@ -26,7 +26,7 @@ public class Uci extends Thread {
             obs= new Automation();
             
             //Diretório da engine que usa protocolo UCI
-            Process processo = Runtime.getRuntime().exec("C:\\Users\\Godofga\\Desktop\\komodo\\Windows\\komodo-10-64bit.exe");
+            Process processo = Runtime.getRuntime().exec("src/Engines/komodo-10-64bit.exe");
             
             //Buffers de entrada e saída
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(processo.getOutputStream()));
@@ -79,7 +79,7 @@ public class Uci extends Thread {
                     System.out.println("Waiting for enemy moves");
                     while(true){
                         //Verificando se houve movimento inimigo
-                        if(Database.getEnemyMove()){
+                        if(Database.getEnemyMove()&&!Database.getWaiter()){
                             
                             System.out.println("Enemy move! Searching a good response");
                             
@@ -89,6 +89,7 @@ public class Uci extends Thread {
                             out.write(message);
                             System.out.println(message);
                             
+                            Database.setWaiter(true);
                             Database.setEnemyMove(false); 
                             break;
                             
@@ -111,13 +112,14 @@ public class Uci extends Thread {
                         while(true){
                             
                             //Verificando se houve movimento inimigo
-                            if(Database.getEnemyMove()){
+                            if(Database.getEnemyMove()&&!Database.getWaiter()){
                                 
                                 //Buscando melhor movimento
                                 String message = "position startpos moves"+Database.getHistory()+"\n"
                                 + "go movetime " +((rand.nextInt(10)+3)*1000)+"\n";
                                 System.out.println("Movimento Inimigo! Procurando bestmove");
                                 Database.setEnemyMove(false);
+                                Database.setWaiter(true);
                                 System.out.println(message);
                                 out.write(message);
                                 break;
