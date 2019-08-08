@@ -45,6 +45,7 @@ public class AutoChess extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaBoard = new javax.swing.JTextArea();
         jButtonCheckGame = new javax.swing.JButton();
+        jButtonResolucao = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,26 +81,38 @@ public class AutoChess extends javax.swing.JFrame {
             }
         });
 
+        jButtonResolucao.setText("Resolução:1050p");
+        jButtonResolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResolucaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelSide)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonCheckGame)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonBot)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                        .addGap(8, 8, 8)
+                        .addComponent(jButtonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonCheckGame)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonBot))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelSide)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonResolucao)))
+                        .addGap(0, 50, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,7 +128,8 @@ public class AutoChess extends javax.swing.JFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jLabelSide))
-                        .addComponent(jButtonBot, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonBot, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonResolucao, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
         );
@@ -126,7 +140,7 @@ public class AutoChess extends javax.swing.JFrame {
     private void jButtonBotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBotActionPerformed
         // TODO add your handling code here:
         Database.setCompetitive(!Database.getCompetitive());
-        if(Database.competitive)
+        if(Database.getCompetitive())
             jButtonBot.setText("Competitive");
         else
             jButtonBot.setText("Bot");
@@ -137,7 +151,7 @@ public class AutoChess extends javax.swing.JFrame {
         if(!running){
                 obs.start();
                 obs.checkSide();
-                jLabelSide.setText(Database.white?"You are playing with white pieces":"You are playing with black pieces");
+                jLabelSide.setText(Database.getWhite()?"You are playing with white pieces":"You are playing with black pieces");
                 
             
         }
@@ -157,6 +171,29 @@ public class AutoChess extends javax.swing.JFrame {
         System.out.println(board);
         
     }//GEN-LAST:event_jButtonCheckGameActionPerformed
+
+    private void jButtonResolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResolucaoActionPerformed
+        // TODO add your handling code here:
+        Database.setResolucao(Database.getResolucao()+1);
+        if(Database.getResolucao()>2)
+            Database.setResolucao(0);
+        switch(Database.getResolucao()){
+            //1680x1050
+            case 0:
+                jButtonResolucao.setText("Resolução:1050p");
+                break;
+            //1920x1080
+            case 1:
+                jButtonResolucao.setText("Resolução:1080p");
+                break;
+            //1600x900
+            case 2:
+                jButtonResolucao.setText("Resolução:900p");
+                break;
+        }
+        
+        
+    }//GEN-LAST:event_jButtonResolucaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,6 +236,7 @@ public class AutoChess extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBot;
     private javax.swing.JButton jButtonCheckGame;
     private javax.swing.JButton jButtonOn;
+    private javax.swing.JButton jButtonResolucao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelSide;
     private javax.swing.JScrollPane jScrollPane1;

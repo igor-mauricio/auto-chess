@@ -18,6 +18,16 @@ public class Database {
     private static char board[][];
     //Melhor jogada
     private static String bestMove="";
+    //Resolucao
+    /*
+        0-1680x1050
+        1-1920x1080
+        2-1600x900
+    */
+    
+    private static int resolucao=0;
+    
+    
     //Tabuleiro inicial
     private static char initialBoard[][] = {{'r','n','b','q','k','b','n','r'}
             ,{'p','p','p','p','p','p','p','p'}
@@ -95,6 +105,13 @@ public class Database {
     
     public static void resetHistory(){
         Database.bestMove = "";
+    }
+    
+    public static int getResolucao(){
+        return Database.resolucao;
+    }
+    public static void setResolucao(int resolucao){
+         Database.resolucao = resolucao;
     }
     
     

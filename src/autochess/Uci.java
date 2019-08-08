@@ -115,7 +115,7 @@ public class Uci extends Thread {
                                 
                                 //Buscando melhor movimento
                                 String message = "position startpos moves"+Database.getHistory()+"\n"
-                                + "go movetime " +((rand.nextInt(1)+6)*1000)+"\n";
+                                + "go movetime " +((rand.nextInt(10)+3)*1000)+"\n";
                                 System.out.println("Movimento Inimigo! Procurando bestmove");
                                 Database.setEnemyMove(false);
                                 System.out.println(message);
