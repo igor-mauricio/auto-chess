@@ -1,0 +1,7 @@
+{
+    "java.project.sourcePaths": [
+        "src",
+        "autochess/src/main/java/automaniac",
+        "autochess\\src\\test\\java"
+    ]
+}
